@@ -1,0 +1,14 @@
+{
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "2.16.1",
+      "resolved": "ghcr.io/devcontainers/features/docker-in-docker@sha256:ce078b7bf7d9ef3bcb9813b32103795d8d72172446890b64772cbe1dec6baafd",
+      "integrity": "sha256:ce078b7bf7d9ef3bcb9813b32103795d8d72172446890b64772cbe1dec6baafd"
+    },
+    "ghcr.io/jlaundry/devcontainer-features/azure-functions-core-tools:1": {
+      "version": "1.0.0",
+      "resolved": "ghcr.io/jlaundry/devcontainer-features/azure-functions-core-tools@sha256:7be7f0807bb6f1634ca48b410f72d74b27ce507fda5778baf20055ee4a504479",
+      "integrity": "sha256:7be7f0807bb6f1634ca48b410f72d74b27ce507fda5778baf20055ee4a504479"
+    }
+  }
+}

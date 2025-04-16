@@ -6,6 +6,7 @@
   <ItemGroup>
     <PackageReference Include="MQTTnet" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua.Client" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +16,9 @@
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Quickstarts.ReferenceClient.Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

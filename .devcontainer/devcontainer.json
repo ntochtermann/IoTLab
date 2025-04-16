@@ -19,7 +19,9 @@
   },
   "forwardPorts": [
     1883,
-    9001
+    9001,
+    8080,
+    50000
   ],
   "portsAttributes": {
     "1883": {
@@ -29,6 +31,14 @@
     "9001": {
       "label": "MQTT Websocket",
       "onAutoForward": "silent"
+    },
+    "8080": {
+      "label": "OPC UA HTTP",
+      "onAutoForward": "notify"
+    },
+    "50000": {
+      "label": "OPC UA TCP",
+      "onAutoForward": "notify"
     }
   },
   "containerUser": "root",

@@ -18,5 +18,10 @@ if (senders.Any(sender => sender.Equals("MQTT Simulator")))
     builder.Services.AddHostedService<MqttDeviceSimulator>();
 }
 
+if (senders.Any(sender => sender.Equals("OPC UA")))
+{
+    builder.Services.AddHostedService<Opc2MqttConverter>();
+}
+
 var host = builder.Build();
 await host.RunAsync();

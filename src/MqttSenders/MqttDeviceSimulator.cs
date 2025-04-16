@@ -30,9 +30,8 @@ namespace MqttSenders
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                var quantity = _random.Next(1, 10);
-                var productCode = _productCodes[_random.Next(_productCodes.Length)];
-                var iotMessage = new ProducedMessage(DateTimeOffset.Now, productCode, quantity);
+                var quantity = _random.Next(1, 30);
+                var iotMessage = new IotMessage<double>(quantity, DateTimeOffset.Now, "telemetry");
                 var payload = JsonSerializer.Serialize(iotMessage);
 
                 var applicationMessage = new MqttApplicationMessageBuilder()
@@ -41,12 +40,10 @@ namespace MqttSenders
                     .Build();
 
                 _logger.LogInformation(
-                    "Publishing Message at {Timestamp} with ProductCode: {ProductCode} and Quantity: {Quantity}",
+                    "Publishing Message at {Timestamp} with Quantity: {Quantity}",
                     DateTimeOffset.Now,
-                    productCode,
                     quantity
                 );
-
                 await mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
 
                 await Task.Delay(1000, stoppingToken);

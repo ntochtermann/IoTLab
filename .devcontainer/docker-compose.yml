@@ -41,6 +41,25 @@ services:
       - DOCKER_INFLUXDB_INIT_RETENTION=30d
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=MyToken
 
+  opcplc:
+    image: mcr.microsoft.com/iotedge/opc-plc:latest
+    ports:
+      - "50000:50000"
+      - "8080:8080"
+    command: >
+      --pn=50000
+      --autoaccept
+      --sph
+      --sn=5
+      --sr=10
+      --st=uint
+      --fn=5
+      --fr=1
+      --ft=uint
+      --gn=5
+      --aa
+      --ut
+
 configs:
   mosquitto_config:
     file: ./mosquitto.conf

@@ -8,7 +8,6 @@
         <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.4" />
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.4" />
         <PackageVersion Include="Microsoft.Azure.Devices.Client" Version="1.42.3" />
-
         <PackageVersion Include="Microsoft.Azure.Functions.Worker" Version="2.51.0" />
         <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.EventHubs" Version="6.5.0" />
         <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
@@ -16,5 +15,6 @@
         <PackageVersion Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
         <PackageVersion Include="Microsoft.ApplicationInsights.WorkerService" Version="2.23.0" />
         <PackageVersion Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="2.50.0" />
+        <PackageVersion Include="OPCFoundation.NetStandard.Opc.Ua.Client" Version="1.5.378.134" />
     </ItemGroup>
 </Project>
