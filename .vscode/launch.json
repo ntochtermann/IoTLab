@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch MQTT Receiver",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "Build MQTT Receiver",
+      "program": "MqttReceiver.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/MqttReceiver/bin/Debug/net8.0/",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
+      "name": "Launch MQTT Senders",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "Build MQTT Senders",
+      "program": "MqttSenders.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/MqttSenders/bin/Debug/net8.0/",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    }
+  ]
+}

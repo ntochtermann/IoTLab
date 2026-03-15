@@ -1,0 +1,27 @@
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    network_mode: service:mqtt
+    command: sleep infinity
+
+  mqtt:
+    image: eclipse-mosquitto:latest
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    configs:
+      - source: mosquitto_config
+        target: /mosquitto/config/mosquitto.conf
+
+  mqttx:
+    image: emqx/mqttx-web:latest
+    ports:
+      - "4200:80"
+
+configs:
+  mosquitto_config:
+    file: ./mosquitto.conf

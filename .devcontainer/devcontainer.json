@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "IoT",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": true,
+      "azureDnsAutoDetection": true,
+      "installDockerBuildx": true,
+      "installDockerComposeSwitch": true,
+      "version": "latest",
+      "dockerDashComposeVersion": "none"
+    }
+  },
+  "forwardPorts": [
+    1883,
+    9001,
+    4200
+  ],
+  "portsAttributes": {
+    "1883": {
+      "label": "MQTT",
+      "onAutoForward": "notify"
+    },
+    "9001": {
+      "label": "MQTT Websocket",
+      "onAutoForward": "silent"
+    },
+    "4200": {
+      "label": "MQTTX",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "containerUser": "root",
+  "remoteUser": "root",
+  "postCreateCommand": "chmod +x ./.devcontainer/scripts/post-create.sh && ./.devcontainer/scripts/post-create.sh ${containerWorkspaceFolder}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "csharpier.csharpier-vscode",
+        "davidanson.vscode-markdownlint",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-vscode-remote.remote-containers"
+      ]
+    }
+  }
+}
