@@ -17,11 +17,6 @@ services:
       - source: mosquitto_config
         target: /mosquitto/config/mosquitto.conf
 
-  mqttx:
-    image: emqx/mqttx-web:latest
-    ports:
-      - "4200:80"
-
 configs:
   mosquitto_config:
     file: ./mosquitto.conf

@@ -16,8 +16,7 @@
   },
   "forwardPorts": [
     1883,
-    9001,
-    4200
+    9001
   ],
   "portsAttributes": {
     "1883": {
@@ -27,10 +26,6 @@
     "9001": {
       "label": "MQTT Websocket",
       "onAutoForward": "silent"
-    },
-    "4200": {
-      "label": "MQTTX",
-      "onAutoForward": "openBrowser"
     }
   },
   "containerUser": "root",
