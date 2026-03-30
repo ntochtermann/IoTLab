@@ -19,8 +19,10 @@ namespace StreamProcessing
 
         public bool HandleMessage(IotMessage<double> message)
         {
-            // TODO: Implement the logic to filter messages based on the instructions in Übung2.md.
-            throw new NotImplementedException();
+            var acceptMessage = message.Message < 20;
+            var logMessage = acceptMessage ? "Message accepted: {message}" : "Message dismissed: {message}";
+            logger.LogInformation(logMessage, message.Message);
+            return acceptMessage;
         }
     }
 }

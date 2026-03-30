@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
-    <ProjectReference Include="..\StreamProcessing\StreamProcessing.csproj" />
+    <ProjectReference Include="../Interfaces/Interfaces.csproj" />
+    <ProjectReference Include="../StreamProcessing/StreamProcessing.csproj" />
   </ItemGroup>
 </Project>

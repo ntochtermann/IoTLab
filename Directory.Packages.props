@@ -7,5 +7,6 @@
         <PackageVersion Include="MQTTnet" Version="5.1.0.1559" />
         <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.4" />
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.4" />
+        <PackageVersion Include="Microsoft.Azure.Devices.Client" Version="1.42.3" />
     </ItemGroup>
 </Project>
