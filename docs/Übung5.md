@@ -38,6 +38,7 @@
 ## Schritt 6: Testen
 
 - Simulieren Sie Daten, die vom Edge-Gerät gesendet werden, um die Azure Function zu triggern.
+- Möglicherweise müssen Sie den IoT Hub Connection String wieder in zu den [Appsettings](../src/MqttReceiver/appsettings.json) hinzufügen.
 - Stellen Sie sicher, dass Daten korrekt geloggt werden, wenn die Nachrichten den Schwellenwert überschreiten.
 
 ## Schritt 7: Deployment
