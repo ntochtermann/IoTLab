@@ -5,6 +5,9 @@
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
+    "ghcr.io/jlaundry/devcontainer-features/azure-functions-core-tools:1": {
+      "version": "latest"
+    },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "moby": true,
       "azureDnsAutoDetection": true,
@@ -38,7 +41,8 @@
         "davidanson.vscode-markdownlint",
         "ms-dotnettools.csdevkit",
         "ms-dotnettools.csharp",
-        "ms-vscode-remote.remote-containers"
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-azurefunctions"
       ]
     }
   }
