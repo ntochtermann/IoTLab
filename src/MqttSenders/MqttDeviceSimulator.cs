@@ -14,10 +14,9 @@ namespace MqttSenders
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // Verbinde dich mit dem MQTT Broker über localhost und Port 1883
-            var mqttClient = _mqttFactory.CreateMqttClient();
-            var options = _mqttFactory.CreateClientOptionsBuilder().WithTcpServer("localhost", 1883).Build();
-            await mqttClient.ConnectAsync(options, CancellationToken.None);
+            using var mqttClient = _mqttFactory.CreateMqttClient();
+            var mqttClientOptions = new MqttClientOptionsBuilder().WithTcpServer("localhost", 1883).Build();
+            await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -25,23 +24,21 @@ namespace MqttSenders
                 var iotMessage = new IotMessage<long>(temperature, DateTimeOffset.Now, "telemetry");
                 var payload = JsonSerializer.Serialize(iotMessage);
 
-                // Erstelle eine MQTT Nachricht mit dem Topic "temperature/living_room" und dem Payload der Temperatur
-                var message = new MqttApplicationMessageBuilder().WithTopic("temperature/living_room").WithPayload(payload).Build();
+                var applicationMessage = new MqttApplicationMessageBuilder()
+                    .WithTopic("temperature/living_room")
+                    .WithPayload(payload)
+                    .Build();
 
-                _logger.LogInformation(
-                    "Publishing Message at {Timestamp} with Temperature: {Temperature}",
-                    DateTimeOffset.Now,
-                    temperature
-                );
-
-                // Sende die MQTT Nachricht an den Broker
-                await mqttClient.PublishAsync(message, CancellationToken.None);
-
+                _logger.LogInformation("Publishing Message at {Timestamp} with Temperature: {Temperature}", DateTimeOffset.Now, temperature);
+                await mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
                 await Task.Delay(1000, stoppingToken);
             }
 
-            // Trenne die Verbindung zum MQTT Broker
-            await mqttClient.DisconnectAsync(new MqttClientDisconnectOptionsBuilder().WithReason(MqttClientDisconnectOptionsReason.NormalDisconnection).Build(), CancellationToken.None);
+            await mqttClient.DisconnectAsync(
+                new MqttClientDisconnectOptionsBuilder()
+                    .WithReason(MqttClientDisconnectOptionsReason.NormalDisconnection)
+                    .Build(),
+                stoppingToken);
         }
     }
 }
