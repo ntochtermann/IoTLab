@@ -1,0 +1,11 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+        "IotHubEndpoint": "<your Event Hub-compatible endpoint>",
+        "IotHubEndpointName": "<your Event Hub-compatible name>",
+        "IoTHubDeviceId": "<your IoT Hub Device ID here>",
+        "IoTHubServiceConnectionString": "<your IoT Hub Service Connection String here>"
+    }
+}

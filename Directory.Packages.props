@@ -8,6 +8,7 @@
         <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.4" />
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.4" />
         <PackageVersion Include="Microsoft.Azure.Devices.Client" Version="1.42.3" />
+        <PackageVersion Include="Microsoft.Azure.Devices" Version="1.41.0" />
 
         <PackageVersion Include="Microsoft.Azure.Functions.Worker" Version="2.51.0" />
         <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.EventHubs" Version="6.5.0" />
