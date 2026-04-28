@@ -36,6 +36,7 @@ namespace MqttReceiver
                 {
                     _logger.LogError(ex, "Error processing message");
                 }
+                await processor.HandleMessage(message);
                 return;
             };
 
