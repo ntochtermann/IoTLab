@@ -8,29 +8,26 @@ namespace StreamProcessing
     public class AggregatorAverage : IStreamProcessingOperation<double, IotMessage<double>?>
     {
         private readonly ILogger<AggregatorAverage> logger;
-
-        private Queue<IotMessage<double>> messageQueue;
-
-        private const int count = 10;
+        private Queue<double> Messages;
+        private int QueueLength;
 
         public AggregatorAverage(ILogger<AggregatorAverage> logger)
         {
+            Messages = new Queue<double>();
+            QueueLength = 10;
             this.logger = logger;
-            this.messageQueue = new Queue<IotMessage<double>>();
         }
 
         public IotMessage<double>? HandleMessage(IotMessage<double> message)
         {
-            // TODO: Implement the logic to calculate the average based on the instructions in Übung2.md.
-            messageQueue.Enqueue(message);
-            logger.LogInformation("QueueLength: {length}", messageQueue.Count);
-
-            if (messageQueue.Count == count)
+            Messages.Enqueue(message.Message);
+            logger.LogInformation("Message added to queue: {message}", message.Message);
+            logger.LogInformation("QueueLength: {length}", Messages.Count);
+            if (Messages.Count >= QueueLength)
             {
-                double avg = messageQueue.Average(m => m.Message);
-                messageQueue.Clear();
-
-                return new IotMessage<double>(avg, DateTimeOffset.Now, "aggregate");
+                double average = Messages.Average();
+                Messages.Clear();
+                return new IotMessage<double>(average, DateTimeOffset.Now, "aggregate");
             }
 
             return null;

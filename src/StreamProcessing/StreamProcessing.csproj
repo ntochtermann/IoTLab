@@ -5,7 +5,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+    <ProjectReference Include="../Interfaces/Interfaces.csproj" />
+    <ProjectReference Include="../IoTHubConnector/IoTHubConnector.csproj" />
+
   </ItemGroup>
 
 </Project>

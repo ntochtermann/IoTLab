@@ -19,4 +19,4 @@ if (senders.Any(sender => sender.Equals("MQTT Simulator")))
 }
 
 var host = builder.Build();
-host.Run();
+await host.RunAsync();

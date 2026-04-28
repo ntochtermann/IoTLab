@@ -28,6 +28,14 @@ namespace MqttReceiver
                 }
 
                 _logger.LogInformation("Received Message: {message}, Timestamp: {Timestamp}, Type: {Type}", message.Message, message.Timestamp, message.Type);
+                try
+                {
+                    await processor.HandleMessage(message);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error processing message");
+                }
                 await processor.HandleMessage(message);
                 return;
             };
