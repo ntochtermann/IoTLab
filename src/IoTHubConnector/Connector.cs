@@ -14,15 +14,26 @@ namespace IoTHubConnector
         public Connector(ILogger<Connector> logger, ConnectorConfig config)
         {
             this.logger = logger;
-            // TODO: Initialize the deviceClient using the IoT Hub connection string from the config.
+            this.deviceClient = DeviceClient.CreateFromConnectionString(config.IotHubConnectionString);
         }
 
         public async Task SendMessageToCloudAsync<T>(IotMessage<T> messageToSend)
         {
-            // TODO: Convert the message to a IoTHub message
-            logger.LogInformation("received Message. Forwarding to IoTHub");
-            // TODO: Implement the logic to send the message to IoT Hub using the deviceClient.
-            logger.LogInformation("Succesfully forwarded to IoTHub");
+            try
+            {
+                logger.LogInformation("received Message. Forwarding to IoTHub");
+                await deviceClient.OpenAsync();
+                logger.LogInformation("IoT Hub connection opened successfully");
+                var json = JsonSerializer.Serialize(messageToSend);
+                var message = new Message(Encoding.UTF8.GetBytes(json));
+                await deviceClient.SendEventAsync(message);
+                logger.LogInformation("Successfully forwarded to IoTHub");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to send message to IoT Hub");
+                throw;
+            }
         }
     }
 
