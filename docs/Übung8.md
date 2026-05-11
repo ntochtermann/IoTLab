@@ -31,7 +31,7 @@ Folgende Services stehen bereit:
 | Service   | Beschreibung                | URL / Port                        |
 |-----------|-----------------------------|-----------------------------------|
 | Mosquitto | MQTT-Broker                 | `localhost:1883`                  |
-| InfluxDB  | Zeitreihendatenbank         | weitergeleiteter Port `38086`     |
+| InfluxDB  | Zeitreihendatenbank         | weitergeleiteter Port `8086`     |
 | Telegraf  | Verbindet MQTT mit InfluxDB | –                                 |
 | Grafana   | Visualisierungs-Dashboards  | weitergeleiteter Port `3000`      |
 
@@ -43,33 +43,16 @@ Starten Sie nun den **MqttSender** lokal (F5 oder `dotnet run` im Projekt `src/M
 
 ---
 
-## Schritt 2: Datenpipeline verstehen
+## Schritt 2: InfluxDB erkunden
 
-Machen Sie sich mit den Konfigurationsdateien im Ordner `.devcontainer/` vertraut:
-
-- **`mosquitto.conf`** – Konfiguration des MQTT-Brokers (Port, anonymer Zugriff).
-- **`telegraf.conf`** – Telegraf abonniert alle MQTT-Topics (`#`) und schreibt die Daten in InfluxDB.
-- **`grafana-datasources.yaml`** – Verbindet Grafana automatisch mit InfluxDB.
-- **`grafana-dashboard.json`** – Vorkonfiguriertes Dashboard mit einem Temperatur-Graphen.
-
-Beantworten Sie folgende Fragen:
-
-1. Welches MQTT-Topic abonniert Telegraf?
-2. Welches InfluxDB-Bucket werden die Daten geschrieben?
-3. Welches Flux-Query verwendet das Grafana-Dashboard, um die Daten abzurufen?
-
----
-
-## Schritt 3: InfluxDB erkunden
-
-1. Öffnen Sie InfluxDB über den weitergeleiteten Port `38086` im **Ports**-Panel und melden Sie sich an.
+1. Öffnen Sie InfluxDB über den weitergeleiteten Port `8086` im **Ports**-Panel und melden Sie sich an.
 2. Navigieren Sie zu **Data Explorer**.
-3. Suchen Sie nach dem Bucket `influxdb` und dem Measurement `temperature`.
+3. Suchen Sie nach dem Bucket `CurrentData` und dem topic `temperature/living_room`.
 4. Vergewissern Sie sich, dass Daten mit dem Feld `Message` (Temperaturwert) ankommen.
 
 ---
 
-## Schritt 4: Grafana-Dashboard erkunden
+## Schritt 3: Grafana-Dashboard erkunden
 
 1. Öffnen Sie Grafana über den weitergeleiteten Port `3000` im **Ports**-Panel und melden Sie sich an.
 2. Navigieren Sie zu **Dashboards → IoT Temperature Dashboard**.
@@ -78,7 +61,7 @@ Beantworten Sie folgende Fragen:
 
 ---
 
-## Schritt 5: Eigenes Panel erstellen
+## Schritt 4: Eigenes Panel erstellen
 
 Erstellen Sie in Grafana ein zweites Panel, das den **aktuellen (letzten) Temperaturwert** als Gauge (Tachometer) anzeigt.
 
@@ -90,29 +73,13 @@ Hinweise:
 ```flux
 from(bucket: "CurrentData")
   |> range(start: -1m)
-  |> filter(fn: (r) => r["_measurement"] == "temperature")
+  |> filter(fn: (r) => r["topic"] == "temperature/living_room")
   |> filter(fn: (r) => r["_field"] == "Message")
   |> last()
 ```
 
 - Stellen Sie die Einheit auf **Celsius (°C)** ein.
 - Definieren Sie sinnvolle Schwellenwerte (z. B. grün bis 22 °C, gelb bis 28 °C, rot ab 28 °C).
-
----
-
-## Schritt 6: Telegraf-Konfiguration anpassen
-
-Öffnen Sie `.devcontainer/telegraf.conf` und entfernen Sie `name_override`, sodass Telegraf den Topic-Namen als Measurement-Namen verwendet (statt immer `temperature`).
-
-Starten Sie den Telegraf-Container neu, damit die Änderung wirksam wird:
-
-```bash
-docker restart telegraf
-```
-
-Beobachten Sie in InfluxDB, unter welchem Measurement-Namen die Daten nun gespeichert werden.
-
-> **Hinweis:** Ohne `name_override` verwendet Telegraf den MQTT-Topic-Namen als Measurement-Namen. Achten Sie darauf, dass das Grafana-Query entsprechend angepasst wird.
 
 ---
 

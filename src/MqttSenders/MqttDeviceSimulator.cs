@@ -35,6 +35,8 @@ namespace MqttSenders
             while (!stoppingToken.IsCancellationRequested)
             {
                 temperature = _heatingMode ? temperature + _random.NextSingle() : temperature - _random.NextSingle();
+                if(temperature > 25) _heatingMode = false;
+                if(temperature < 18) _heatingMode = true;
                 var iotMessage = new IotMessage<double>(temperature, DateTimeOffset.Now, "telemetry");
                 var payload = JsonSerializer.Serialize(iotMessage);
 
