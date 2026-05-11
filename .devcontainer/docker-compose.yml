@@ -5,7 +5,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../..:/workspaces:cached
-    network_mode: service:mqtt
     command: sleep infinity
 
   mqtt:
@@ -28,7 +27,7 @@ services:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf
 
   influxdb:
-    image: influxdb:2
+    image: influxdb:2.7.11
     container_name: influxdb
     ports:
       - "8086:8086"

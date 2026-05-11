@@ -13,7 +13,7 @@ Das System aus den vorherigen Übungen sendet Temperaturnachrichten über den MQ
 
 **Zielbild:**
 
-```
+```text
 MqttSender --> Mosquitto (MQTT) --> Telegraf --> InfluxDB --> Grafana
 ```
 
@@ -23,16 +23,17 @@ Alle Komponenten werden über Docker Compose gestartet. Die Temperaturdaten sind
 
 ## Schritt 1: Infrastruktur starten
 
-Alle benötigten Services (Mosquitto, Telegraf, InfluxDB, Grafana) sind bereits im **Dev Container** vorkonfiguriert und starten automatisch beim Öffnen des Codespaces.
+Alle benötigten Services (Mosquitto, Telegraf, InfluxDB, Grafana) sind im **Dev Container** vorkonfiguriert.
+In GitHub Codespaces sollten Sie die Oberflächen über die weitergeleiteten Ports im **Ports**-Panel öffnen, nicht über `localhost` innerhalb des Containers.
 
 Folgende Services stehen bereit:
 
-| Service     | Beschreibung                                    | URL / Port              |
-|-------------|-------------------------------------------------|-------------------------|
-| Mosquitto   | MQTT-Broker                                     | `localhost:1883`        |
-| InfluxDB    | Zeitreihendatenbank                             | <http://localhost:8086>   |
-| Telegraf    | Verbindet MQTT mit InfluxDB                     | –                       |
-| Grafana     | Visualisierungs-Dashboards                      | <http://localhost:3000>   |
+| Service   | Beschreibung                | URL / Port                        |
+|-----------|-----------------------------|-----------------------------------|
+| Mosquitto | MQTT-Broker                 | `localhost:1883`                  |
+| InfluxDB  | Zeitreihendatenbank         | weitergeleiteter Port `38086`     |
+| Telegraf  | Verbindet MQTT mit InfluxDB | –                                 |
+| Grafana   | Visualisierungs-Dashboards  | weitergeleiteter Port `3000`      |
 
 Login-Daten für InfluxDB und Grafana:  
 **Benutzername:** `admin`  
@@ -61,7 +62,7 @@ Beantworten Sie folgende Fragen:
 
 ## Schritt 3: InfluxDB erkunden
 
-1. Öffnen Sie InfluxDB unter <http://localhost:8086> und melden Sie sich an.
+1. Öffnen Sie InfluxDB über den weitergeleiteten Port `38086` im **Ports**-Panel und melden Sie sich an.
 2. Navigieren Sie zu **Data Explorer**.
 3. Suchen Sie nach dem Bucket `influxdb` und dem Measurement `temperature`.
 4. Vergewissern Sie sich, dass Daten mit dem Feld `Message` (Temperaturwert) ankommen.
@@ -70,7 +71,7 @@ Beantworten Sie folgende Fragen:
 
 ## Schritt 4: Grafana-Dashboard erkunden
 
-1. Öffnen Sie Grafana unter <http://localhost:3000> und melden Sie sich an.
+1. Öffnen Sie Grafana über den weitergeleiteten Port `3000` im **Ports**-Panel und melden Sie sich an.
 2. Navigieren Sie zu **Dashboards → IoT Temperature Dashboard**.
 3. Das Panel zeigt die Durchschnittstemperatur der letzten 15 Minuten in 10-Sekunden-Intervallen.
 4. Beobachten Sie, wie sich die simulierte Temperatur im Laufe der Zeit verändert (das Gerät wechselt zwischen Heiz- und Kühlmodus).

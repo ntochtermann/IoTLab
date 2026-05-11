@@ -1,23 +1,25 @@
 using System.Text.Json;
 using Interfaces;
 using IoTHubConnector;
+using Microsoft.Extensions.Configuration;
 using MQTTnet;
 using StreamProcessing;
 
 namespace MqttReceiver
 {
-    public class MessageReceiver(ILogger<MessageReceiver> logger, StreamProcessor processor, Connector iotHubConnector) : BackgroundService
+    public class MessageReceiver(ILogger<MessageReceiver> logger, StreamProcessor processor, Connector iotHubConnector, IConfiguration configuration) : BackgroundService
     {
         private readonly ILogger<MessageReceiver> _logger = logger;
         private readonly StreamProcessor processor = processor;
         private readonly Connector _iotHubConnector = iotHubConnector;
+        private readonly string _mqttHost = configuration.GetValue<string>("MqttHost") ?? "localhost";
         private readonly MqttClientFactory _mqttFactory = new();
         private IMqttClient _mqttClient = null!;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _mqttClient = _mqttFactory.CreateMqttClient();
-            var mqttClientOptions = new MqttClientOptionsBuilder().WithTcpServer("localhost", 1883).Build();
+            var mqttClientOptions = new MqttClientOptionsBuilder().WithTcpServer(_mqttHost, 1883).Build();
             await _mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
 
             _iotHubConnector.ControlMessageReceived += HandleControlMessageReceivedEvent;

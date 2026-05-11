@@ -1,14 +1,16 @@
 ﻿using System.Text.Json;
 using Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MQTTnet;
 
 namespace MqttSenders
 {
-    public class MqttDeviceSimulator(ILogger<MqttDeviceSimulator> logger) : BackgroundService
+    public class MqttDeviceSimulator(ILogger<MqttDeviceSimulator> logger, IConfiguration configuration) : BackgroundService
     {
         private readonly ILogger<MqttDeviceSimulator> _logger = logger;
+        private readonly string _mqttHost = configuration.GetValue<string>("MqttHost") ?? "localhost";
         private readonly Random _random = new();
         private readonly MqttClientFactory _mqttFactory = new();
         private bool _heatingMode = true;
@@ -17,7 +19,7 @@ namespace MqttSenders
         {
             using var mqttClient = _mqttFactory.CreateMqttClient();
             var mqttClientOptions = new MqttClientOptionsBuilder()
-                .WithTcpServer("localhost", 1883)
+                .WithTcpServer(_mqttHost, 1883)
                 .Build();
             await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
 
