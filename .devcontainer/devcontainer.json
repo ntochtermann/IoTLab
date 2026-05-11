@@ -19,7 +19,9 @@
   },
   "forwardPorts": [
     1883,
-    9001
+    9001,
+    3000,
+    8086
   ],
   "portsAttributes": {
     "1883": {
@@ -28,6 +30,14 @@
     },
     "9001": {
       "label": "MQTT Websocket",
+      "onAutoForward": "silent"
+    },
+    "3000": {
+      "label": "Grafana",
+      "onAutoForward": "notify"
+    },
+    "8086": {
+      "label": "InfluxDB",
       "onAutoForward": "silent"
     }
   },
